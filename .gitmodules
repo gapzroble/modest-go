@@ -1,0 +1,3 @@
+[submodule "modest"]
+	path = modest
+	url = git@github.com:lexborisov/Modest.git
