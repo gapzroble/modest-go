@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/rroble/modest-go/arrogant"
 )
 
 func main() {
-	src := "<html><head></head><body><div>Hello World</div></body></html>"
+	src := "<html><head></head><body><div>Hello World</div><div>Hello again!</div></body></html>"
 	parser := arrogant.New()
 	defer parser.Release()
 	tree, err := parser.Parse(src)

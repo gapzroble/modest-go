@@ -2,6 +2,7 @@ package arrogant
 
 // #include <modest/modest.h>
 import "C"
+import "unsafe"
 
 // NodeRange struct
 type NodeRange struct {
@@ -12,7 +13,17 @@ type NodeRange struct {
 
 // First node
 func (r *NodeRange) First() *Node {
-	// TODO: check length
-	node := C.myhtml_collection_get(r.myhtmlCollection, 0)
-	return &Node{node, r.parent.parent}
+	return r.At(0)
+}
+
+// At get node at given index
+func (r *NodeRange) At(index int) *Node {
+	length := int(r.myhtmlCollection.length)
+	if length <= index {
+		return nil
+	}
+
+	nodes := (*[1 << 30]*C.myhtml_tree_node_t)(unsafe.Pointer(r.myhtmlCollection.list))[:length:length]
+
+	return &Node{nodes[index], r.parent.parent}
 }
